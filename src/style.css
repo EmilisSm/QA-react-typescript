@@ -1,0 +1,89 @@
+section:first-of-type {
+  padding-bottom: 24px;
+  border-bottom: 1px solid;
+}
+
+header {
+  text-align: center;
+}
+
+input {
+  padding: 8px 12px;
+  border-color: rgb(73, 87, 194);
+}
+
+textarea {
+  resize: none;
+  height: 80px;
+  border: 2px inset rgb(73, 87, 194);
+}
+
+label {
+  margin-bottom: 12px;
+}
+
+.question-box {
+  border: 2px inset rgb(73, 87, 194);
+  padding: 10px 5px;
+  margin: 12px 0;
+}
+
+.no-question {
+  color: rgb(208, 37, 37);
+}
+
+.question {
+  font-weight: bold;
+}
+
+.answer {
+  display: none;
+}
+
+.input-wrapper {
+  display: flex;
+  flex-direction: column;
+}
+
+button {
+  padding: 8px 12px;
+  border: 1px solid rgb(193 193 193);
+  border-radius: 4px;
+  margin-right: 8px;
+  color: rgb(255, 255, 255);
+}
+
+.btn-sort {
+  background-color: rgb(28, 73, 220);
+}
+
+.btn-remove {
+  background-color: rgb(208, 37, 37);
+}
+
+.btn-submit {
+  background-color: rgb(12, 138, 12);
+}
+
+@media only screen and (min-width: 800px) {
+  header {
+    margin-left: 10%;
+    text-align: left;
+  }
+
+  main {
+    display: flex;
+    flex-direction: row;
+  }
+
+  section:first-of-type {
+    width: 10%;
+    border-right: 1px solid;
+    border-bottom: none;
+  }
+
+  section:nth-of-type(2n) {
+    margin-left: 24px;
+    width: 50%;
+  }
+}
