@@ -3,7 +3,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 import { addQuestion } from '../../redux/questionsSlice';
 import { useAppDispatch } from '../../redux/hooks';
-import { Input, TextArea, Button } from '../atoms';
+import { Input, TextArea, Button, Tooltip } from '../atoms';
 
 export const QuestionForm = () => {
   const [question, setQuestion] = useState('');
@@ -19,8 +19,10 @@ export const QuestionForm = () => {
   };
 
   return (
-    <>
-      <h2>Create a new question</h2>
+    <div>
+      <Tooltip tooltipText="Here you can create new questions and their answers.">
+        <h2>Create a new question</h2>
+      </Tooltip>
       <form onSubmit={handleSubmit}>
         <Input
           id="question"
@@ -48,6 +50,6 @@ export const QuestionForm = () => {
           Create question
         </Button>
       </form>
-    </>
+    </div>
   );
 };
