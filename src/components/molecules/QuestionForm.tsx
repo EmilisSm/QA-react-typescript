@@ -1,7 +1,7 @@
 import { SetStateAction, useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 
-import { addQuestion } from '../../redux/questionsSlice';
+import { submitQuestion } from '../../redux/questionsSlice';
 import { useAppDispatch } from '../../redux/hooks';
 import { Input, TextArea, Button, Tooltip } from '../atoms';
 
@@ -13,7 +13,7 @@ export const QuestionForm = () => {
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
     const newQuestion = { id: uuidv4(), question, answer };
-    dispatch(addQuestion(newQuestion));
+    dispatch(submitQuestion(newQuestion));
     setQuestion('');
     setAnswer('');
   };

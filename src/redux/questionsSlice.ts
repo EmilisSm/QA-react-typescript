@@ -1,4 +1,4 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction, createAsyncThunk } from '@reduxjs/toolkit';
 import { QuestionObject } from '../types/QuestionType';
 import type { RootState } from './store';
 import { v4 as uuidv4 } from 'uuid';
@@ -6,7 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 interface initialStateType {
   questions: Array<QuestionObject>;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
-  error: string | null;
+  error?: string | null;
 }
 
 const initialState: initialStateType = {
@@ -21,21 +21,18 @@ const initialState: initialStateType = {
   error: null,
 };
 
+export const submitQuestion = createAsyncThunk(
+  'questions/submitQuestion',
+  async (args: { question: string; answer: string }) => {
+    await new Promise((resolve) => setTimeout(resolve, 5000));
+    return { ...args };
+  }
+);
+
 export const questionsSlice = createSlice({
   name: 'questions',
   initialState,
   reducers: {
-    addQuestion: (
-      state,
-      action: PayloadAction<{ question: string; answer: string }>
-    ) => {
-      const { answer, question } = action.payload;
-      state.questions.push({
-        id: uuidv4(),
-        question: question,
-        answer: answer,
-      });
-    },
     sortQuestions: (state) => {
       const questionsList = state.questions;
       questionsList.sort((a: QuestionObject, b: QuestionObject) =>
@@ -60,6 +57,25 @@ export const questionsSlice = createSlice({
       const questionsList = state.questions;
       questionsList.filter((q) => q.id !== action.payload);
     },
+  },
+  extraReducers(builder) {
+    builder
+      .addCase(submitQuestion.pending, (state) => {
+        state.status = 'loading';
+      })
+      .addCase(submitQuestion.fulfilled, (state, action) => {
+        const { answer, question } = action.payload;
+        state.questions.push({
+          id: uuidv4(),
+          question: question,
+          answer: answer,
+        });
+        state.status = 'succeeded';
+      })
+      .addCase(submitQuestion.rejected, (state, action) => {
+        state.status = 'failed';
+        state.error = action.error.message;
+      });
   },
 });
 
