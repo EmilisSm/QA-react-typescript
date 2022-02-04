@@ -14,7 +14,7 @@ const initialState: initialStateType = {
     {
       id: uuidv4(),
       question: 'How to add a question?',
-      answer: 'Answer to a question?',
+      answer: 'Use the form below!',
     },
   ],
   status: 'idle',
