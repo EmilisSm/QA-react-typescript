@@ -9,7 +9,7 @@ export const App = () => {
         <h1>The awesome Q/A tool</h1>
       </header>
       <main>
-        <LeftSideSection questionsAmount={questions.length} />
+        <LeftSideSection />
         <RightSideSection />
       </main>
     </>
