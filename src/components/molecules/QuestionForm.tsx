@@ -1,18 +1,28 @@
-import { SetStateAction, useState } from 'react';
-import { v4 as uuidv4 } from 'uuid';
-
+import { SetStateAction, useEffect, useState } from 'react';
 import { submitQuestion } from '../../redux/questionsSlice';
-import { useAppDispatch } from '../../redux/hooks';
+import { useAppDispatch, useAppSelector } from '../../redux/hooks';
 import { Input, TextArea, Button, Tooltip } from '../atoms';
 
-export const QuestionForm = () => {
+export const QuestionForm: React.FC = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const questionsForEdit = useAppSelector(
+    (state) => state.questions.questionsForm
+  );
   const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    setQuestion(questionsForEdit.question);
+    setAnswer(questionsForEdit.answer);
+  }, [questionsForEdit]);
 
   const handleSubmit = (e: React.SyntheticEvent) => {
     e.preventDefault();
-    const newQuestion = { id: uuidv4(), question, answer };
+    const newQuestion = {
+      id: questionsForEdit.id,
+      question,
+      answer,
+    };
     dispatch(submitQuestion(newQuestion));
     setQuestion('');
     setAnswer('');

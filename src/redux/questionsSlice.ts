@@ -5,9 +5,16 @@ import { v4 as uuidv4 } from 'uuid';
 
 interface initialStateType {
   questions: Array<QuestionObject>;
+  questionsForm: QuestionObject;
   status: 'idle' | 'loading' | 'succeeded' | 'failed';
   error?: string | null;
 }
+
+const emptyQuestion = {
+  id: '',
+  question: '',
+  answer: '',
+};
 
 const initialState: initialStateType = {
   questions: [
@@ -17,13 +24,14 @@ const initialState: initialStateType = {
       answer: 'Use the form below!',
     },
   ],
+  questionsForm: emptyQuestion,
   status: 'idle',
   error: null,
 };
 
 export const submitQuestion = createAsyncThunk(
   'questions/submitQuestion',
-  async (args: { question: string; answer: string }) => {
+  async (args: { id?: string; question: string; answer: string }) => {
     await new Promise((resolve) => setTimeout(resolve, 5000));
     return { ...args };
   }
@@ -42,20 +50,15 @@ export const questionsSlice = createSlice({
     removeQuestions: (state) => {
       state.questions = [];
     },
-    editQuestion: (
+    selectForEditing: (
       state,
       action: PayloadAction<{ id: string; question: string; answer: string }>
     ) => {
-      const { id, answer, question } = action.payload;
-      const selectedQuestion = state.questions.find((q) => q.id === id);
-      if (selectedQuestion) {
-        selectedQuestion.answer = answer;
-        selectedQuestion.question = question;
-      }
+      state.questionsForm = action.payload;
     },
     removeQuestionById: (state, action: PayloadAction<string>) => {
       const questionsList = state.questions;
-      questionsList.filter((q) => q.id !== action.payload);
+      state.questions = questionsList.filter((q) => q.id !== action.payload);
     },
   },
   extraReducers(builder) {
@@ -64,12 +67,21 @@ export const questionsSlice = createSlice({
         state.status = 'loading';
       })
       .addCase(submitQuestion.fulfilled, (state, action) => {
-        const { answer, question } = action.payload;
-        state.questions.push({
-          id: uuidv4(),
-          question: question,
-          answer: answer,
-        });
+        const { id, answer, question } = action.payload;
+        if (id) {
+          const selectedQuestion = state.questions.find((q) => q.id === id);
+          if (selectedQuestion) {
+            selectedQuestion.answer = answer;
+            selectedQuestion.question = question;
+            state.questionsForm = emptyQuestion;
+          }
+        } else {
+          state.questions.push({
+            id: uuidv4(),
+            question: question,
+            answer: answer,
+          });
+        }
         state.status = 'succeeded';
       })
       .addCase(submitQuestion.rejected, (state, action) => {
@@ -79,11 +91,14 @@ export const questionsSlice = createSlice({
   },
 });
 
-export const { addQuestion, sortQuestions, removeQuestions } =
-  questionsSlice.actions;
+export const {
+  sortQuestions,
+  removeQuestions,
+  removeQuestionById,
+  selectForEditing,
+} = questionsSlice.actions;
 
 // Other code such as selectors can use the imported `RootState` type
 export const selectQuestions = (state: RootState) => state.questions;
-// export const selectQuestById = (state: RootState, questionId: string) => state.questions.find((q: QuestionObject) => q.id === questionId);
 
 export default questionsSlice.reducer;
