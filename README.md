@@ -86,8 +86,10 @@ Room for improvement:
 
 To do:
 
-- Edit and Remove single question
+- Display loading state in UI
 - Add Tests Jest & RTL (React Testing Library)
+- Add more animation styles and transitions
+- Create webpack aliases to import or require certain modules in more clean way.
 
 ## Acknowledgements
 
