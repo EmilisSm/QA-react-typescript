@@ -1,4 +1,4 @@
-# Project Name
+# QA-react-redux-typescript
 
 > Q/A application made with
 > React and Redux
