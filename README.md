@@ -41,6 +41,7 @@ List the ready features here:
 - Display each questions hidden answer
 - Remove all questions
 - Display questions count
+- Checkbox to delay question for 5s.
 
 ## Setup
 
@@ -83,6 +84,7 @@ Work in progress...
 Room for improvement:
 
 - Separate styles by each component, implementation could be done with styled-components
+- Add style-lint
 
 To do:
 
