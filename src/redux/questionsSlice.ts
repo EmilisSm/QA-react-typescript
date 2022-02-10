@@ -31,8 +31,15 @@ const initialState: initialStateType = {
 
 export const submitQuestion = createAsyncThunk(
   'questions/submitQuestion',
-  async (args: { id?: string; question: string; answer: string }) => {
-    await new Promise((resolve) => setTimeout(resolve, 5000));
+  async (args: {
+    id?: string;
+    question: string;
+    answer: string;
+    isDelayed: boolean;
+  }) => {
+    if (args.isDelayed) {
+      await new Promise((resolve) => setTimeout(resolve, 5000));
+    }
     return { ...args };
   }
 );

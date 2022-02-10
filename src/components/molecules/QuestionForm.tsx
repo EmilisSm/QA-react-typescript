@@ -6,6 +6,7 @@ import { Input, TextArea, Button, Tooltip } from '../atoms';
 export const QuestionForm: React.FC = () => {
   const [question, setQuestion] = useState('');
   const [answer, setAnswer] = useState('');
+  const [isDelayed, setIsDelayed] = useState(false);
   const questionsForEdit = useAppSelector(
     (state) => state.questions.questionsForm
   );
@@ -23,9 +24,14 @@ export const QuestionForm: React.FC = () => {
       question,
       answer,
     };
-    dispatch(submitQuestion(newQuestion));
+    dispatch(submitQuestion({ ...newQuestion, isDelayed }));
+    setIsDelayed(false);
     setQuestion('');
     setAnswer('');
+  };
+
+  const handleCheckbox = () => {
+    setIsDelayed(!isDelayed);
   };
 
   return (
@@ -55,6 +61,16 @@ export const QuestionForm: React.FC = () => {
           }
           required
         />
+
+        <div className={`input-wrapper-row`}>
+          <input
+            id="isDelayedCheck"
+            type="checkbox"
+            checked={isDelayed}
+            onChange={handleCheckbox}
+          />
+          <label htmlFor="isDelayedCheck">Is question delayed for 5s?</label>
+        </div>
 
         <Button btnStyle="submit" type="submit" disabled={!question || !answer}>
           Create question
