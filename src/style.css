@@ -2,7 +2,7 @@ body {
   font-family: Arial, sans-serif;
   background: radial-gradient(
     circle,
-    rgba(34, 193, 195, 1) 40%,
+    rgb(34 54 195),
     rgba(253, 187, 45, 1) 100%
   );
   animation: fade-in 2s;
@@ -129,6 +129,41 @@ label {
   display: flex;
   flex-direction: column;
   margin-bottom: 12px;
+}
+
+.input-wrapper-row {
+  flex-direction: row;
+  margin-bottom: 12px;
+}
+
+input[type='checkbox'] {
+  appearance: none;
+  background-color: #fff;
+  display: inline-grid;
+  place-content: center;
+  width: 31px;
+  height: 30px;
+  box-shadow: 0px 1px 7px rgba(93, 56, 192, 0.4);
+  border-radius: 2px;
+}
+
+input[type='checkbox']:checked {
+  background-color: rgb(208, 37, 37);
+}
+
+input[type='checkbox']::before {
+  content: '';
+  width: 16px;
+  height: 11.33px;
+  transform: scale(0);
+  transition: 120ms transform ease-in-out;
+  background-color: rgb(34 54 195);
+  transform-origin: bottom left;
+  clip-path: polygon(14% 44%, 0 65%, 50% 100%, 100% 16%, 80% 0%, 43% 62%);
+}
+
+input[type='checkbox']:checked::before {
+  transform: scale(1);
 }
 
 button {
