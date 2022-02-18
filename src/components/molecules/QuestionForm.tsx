@@ -34,6 +34,10 @@ export const QuestionForm: React.FC = () => {
     setIsDelayed(!isDelayed);
   };
 
+  const checkAreFieldsEmpty = () => !answer.trim() && !question.trim();
+
+  const hasQuestionMarkAtEnd = () => question.slice(-1) === '?';
+
   return (
     <div>
       <Tooltip tooltipText="Here you can create new questions and their answers.">
@@ -49,7 +53,11 @@ export const QuestionForm: React.FC = () => {
           onChange={(e) => setQuestion(e.target.value)}
           required
         />
-
+        {!hasQuestionMarkAtEnd() && question.trim() && (
+          <div className="question-error">
+            {"Question doesn't have a question mark at the end"}
+          </div>
+        )}
         <TextArea
           id="answer"
           name="answer"
@@ -72,7 +80,16 @@ export const QuestionForm: React.FC = () => {
           <label htmlFor="isDelayedCheck">Is question delayed for 5s?</label>
         </div>
 
-        <Button btnStyle="submit" type="submit" disabled={!question || !answer}>
+        <Button
+          btnStyle="submit"
+          type="submit"
+          disabled={
+            !question ||
+            !answer ||
+            checkAreFieldsEmpty() ||
+            !hasQuestionMarkAtEnd()
+          }
+        >
           Create question
         </Button>
       </form>
