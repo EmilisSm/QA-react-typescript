@@ -72,6 +72,7 @@ export const questionsSlice = createSlice({
     builder
       .addCase(submitQuestion.pending, (state) => {
         state.status = 'loading';
+        state.questionsForm = emptyQuestion;
       })
       .addCase(submitQuestion.fulfilled, (state, action) => {
         const { id, answer, question } = action.payload;
@@ -80,7 +81,6 @@ export const questionsSlice = createSlice({
           if (selectedQuestion) {
             selectedQuestion.answer = answer;
             selectedQuestion.question = question;
-            state.questionsForm = emptyQuestion;
           }
         } else {
           state.questions.push({
