@@ -1,7 +1,7 @@
 import { Button } from './Button';
 import { Input } from './Input';
 import { TextArea } from './TextArea';
-import { QuestionList } from './QuestionList';
 import { Tooltip } from './Tooltip';
+import QuestionBox from './QuestionBox';
 
-export { Button, Input, TextArea, QuestionList, Tooltip };
+export { Button, Input, TextArea, QuestionBox, Tooltip };

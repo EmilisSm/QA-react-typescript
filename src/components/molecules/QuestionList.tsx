@@ -1,5 +1,5 @@
 import { QuestionObject } from '../../types/QuestionType';
-import QuestionBox from './QuestionBox';
+import QuestionBox from '../atoms/QuestionBox';
 
 export const QuestionList: React.FC<{
   questionsList: Array<QuestionObject>;

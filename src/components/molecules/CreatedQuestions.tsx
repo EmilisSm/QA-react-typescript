@@ -4,7 +4,8 @@ import {
   removeQuestions,
   selectQuestions,
 } from '../../redux/questionsSlice';
-import { Button, QuestionList, Tooltip } from '../atoms';
+import { Button, Tooltip } from '../atoms';
+import { QuestionList } from './QuestionList';
 
 export const CreatedQuestions = () => {
   const dispatch = useAppDispatch();
